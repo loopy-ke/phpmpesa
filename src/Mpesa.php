@@ -122,6 +122,30 @@ class Mpesa
         }
     }
 
+    public function registerCallBack($shortcode, $confirmation_url, $validation_url)
+    {
+
+        $endPoint = "/mpesa/c2b/v1/registerurl";
+        $token = $this->getToken();
+
+        $payload = (object)["ShortCode" => $shortcode,
+            "ResponseType" => "Cancelled",
+            "ConfirmationURL" => $confirmation_url,
+            "ValidationURL" => $validation_url
+        ];
+
+        $options = [RequestOptions::HEADERS => ['Content-Type' => "application/json",
+            "Authorization" => "Bearer $token"],
+            RequestOptions::JSON => $payload
+        ];
+        $response = $this->post($endPoint, $options);
+        if ($response->getStatusCode() == 200) {
+            return true;
+        } else {
+            throw  new AuthenticationException("Invalid grant credentials");
+        }
+    }
+
     protected function getEndPoint($url)
     {
         return $this->getBaseUrl() . $url;
@@ -131,5 +155,11 @@ class Mpesa
     {
         $options[RequestOptions::DEBUG] = $this->debug;
         return $this->client->get($endPoint, $options);
+    }
+
+    protected function post($endPoint, $options = [])
+    {
+        $options[RequestOptions::DEBUG] = $this->debug;
+        return $this->client->post($endPoint, $options);
     }
 }
