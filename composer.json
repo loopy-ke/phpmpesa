@@ -1,0 +1,29 @@
+{
+  "name": "loopy/mpesa-api",
+  "description": "G3 Mpesa API wrapper",
+  "type": "library",
+  "require": {
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Griffins Oringo",
+      "email": "oringogriffns78@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "Loopy\\": "src/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0"
+  },
+  "scripts": {
+    "tests": [
+      "vendor/bin/phpunit"
+    ]
+  }
+}
