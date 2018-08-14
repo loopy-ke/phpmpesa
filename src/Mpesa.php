@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Loopy;
 
 use GuzzleHttp\Client;
