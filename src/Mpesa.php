@@ -138,11 +138,31 @@ class Mpesa
             "Authorization" => "Bearer $token"],
             RequestOptions::JSON => $payload
         ];
+
         $response = $this->post($endPoint, $options);
         if ($response->getStatusCode() == 200) {
             return true;
         } else {
             throw  new AuthenticationException("Invalid grant credentials");
+        }
+    }
+
+    public function transact($shortCode, $amount, $misdn, $reference)
+    {
+        $payload = ["ShortCode" => $shortCode, "CommandID" => "CustomerPayBillOnline", "Amount" => $amount, "Msisdn" => $misdn, "BillRefNumber" => $reference];
+        $endPoint = "/mpesa/c2b/v1/simulate";
+        $token = $this->getToken();
+
+        $options = [RequestOptions::HEADERS => ['Content-Type' => "application/json",
+            "Authorization" => "Bearer $token"],
+            RequestOptions::JSON => $payload
+        ];
+
+        $response = $this->post($endPoint, $options);
+        if ($response->getStatusCode() == 200) {
+            return true;
+        } else {
+            throw  new AuthenticationException("Error Occurred");
         }
     }
 
