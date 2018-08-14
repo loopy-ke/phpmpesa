@@ -117,7 +117,7 @@ class Mpesa
         if ($response->getStatusCode() == 200) {
             return json_decode($response->getBody()->getContents())->access_token;
         } else {
-            throw  new AuthenticationException("Invalid grant credentials");
+            throw  new AuthenticationException(json_decode($response->getBody()->getContents())->errorMessage);
         }
     }
 
@@ -142,7 +142,7 @@ class Mpesa
         if ($response->getStatusCode() == 200) {
             return true;
         } else {
-            throw  new AuthenticationException("Invalid grant credentials");
+            throw  new AuthenticationException(json_decode($response->getBody()->getContents())->errorMessage);
         }
     }
 
